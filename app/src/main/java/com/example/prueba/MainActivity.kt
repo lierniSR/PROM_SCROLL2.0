@@ -1,11 +1,13 @@
 package com.example.prueba
 
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -99,12 +101,33 @@ class MainActivity : AppCompatActivity() {
      * Para añadirlo se necesita un adapter y el viewHolder
      */
     private fun aniadeTarea() {
-        val tareaAAniadir = textoEdit.text.toString()
-        tareas.add(tareaAAniadir)
-        adapter.notifyDataSetChanged()
-        textoEdit.setText("")
-        prefs.guardarTareas(tareas)
-        checkSonido.start()
+        if(textoEdit.text.isNotEmpty()){
+            val tareaAAniadir = textoEdit.text.toString()
+            tareas.add(tareaAAniadir)
+            adapter.notifyDataSetChanged()
+            textoEdit.setText("")
+            prefs.guardarTareas(tareas)
+            checkSonido.start()
+        } else{
+            mostrarAlerta(this)
+        }
+    }
+
+    /**
+     * Metodo que muestra una alerta de error si el campo está vacio
+     *
+     * @param contexto
+     */
+    private fun mostrarAlerta(contexto: Context) {
+        val builder = AlertDialog.Builder(contexto)
+        builder.setTitle("Error")
+            .setMessage("La tarea está vacia...")
+            .setPositiveButton("Aceptar") { dialog, which ->
+                dialog.dismiss()
+            }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     /**
