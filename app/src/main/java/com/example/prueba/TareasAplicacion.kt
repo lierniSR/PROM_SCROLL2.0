@@ -16,7 +16,7 @@ class TareasAplicacion:Application() {
     }
 
     /**
-     * Metodo de Application()
+     * Metodo implementado de Application()
      */
     override fun onCreate() {
         super.onCreate()

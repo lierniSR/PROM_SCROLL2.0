@@ -17,6 +17,8 @@ layout activity_main
 layout item_tarea
 mipmap ic_launcher
 mipmap ic_launcher_round
+raw cash
+raw ok
 string app_name
 style Base.Theme.Prueba
 style Theme.Prueba

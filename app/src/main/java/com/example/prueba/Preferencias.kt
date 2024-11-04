@@ -6,8 +6,9 @@ import android.content.SharedPreferences
 /**
  * Se almacena toda la logica de Shared Preferences
  *
- * @author Lierni
  * @param contexto
+ * @author Lierni
+ * @version 2.0
  */
 class Preferencias(contexto: Context) {
     //companion = static

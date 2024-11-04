@@ -1,5 +1,6 @@
 package com.example.prueba
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.prueba.TareasAplicacion.Companion.prefs
 
 /**
- * App para añadir tareas con 3 mejoras: Añadir reloj
+ * App para añadir tareas, incluyendo la hora
  *
  * @author Lierni
  * @version 2.0
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var buttonTareaAdd: Button
     lateinit var recyclerTareas: RecyclerView
     lateinit var adapter:AdapterTareas
+    lateinit var checkSonido: MediaPlayer
+    lateinit var eliminarSonido: MediaPlayer
 
 
     var tareas = mutableListOf<String>()
@@ -48,6 +51,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         textoEdit = findViewById(R.id.texto)
+        checkSonido = MediaPlayer.create(this, R.raw.ok)
+        eliminarSonido = MediaPlayer.create(this, R.raw.cash)
         initUi()
     }
 
@@ -79,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         tareas.removeAt(posicion)
         adapter.notifyDataSetChanged()
         prefs.guardarTareas(tareas)
+        eliminarSonido.start()
     }
     /**
      * Metodo para crear los listener
@@ -98,6 +104,7 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
         textoEdit.setText("")
         prefs.guardarTareas(tareas)
+        checkSonido.start()
     }
 
     /**

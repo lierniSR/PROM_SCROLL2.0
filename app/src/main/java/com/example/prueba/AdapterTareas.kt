@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Este adapter conectara el viewHolder con toda la aplicacion
+ *
  * @param tareas
  * @param onItemDone
  * @author Lierni
