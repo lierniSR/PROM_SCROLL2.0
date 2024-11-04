@@ -16,7 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.prueba.TareasAplicacion.Companion.prefs
 
 /**
- * App para añadir tareas, incluyendo la hora
+ * App para añadir tareas, incluyendo la hora.
+ * Sonido al añadir.
+ * Sonido al eliminar.
+ * No se pueden añadir tareas vacías.
+ * Sale una alerta de error si la tarea está vacia.
  *
  * @author Lierni
  * @version 2.0
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var buttonTareaAdd: Button
     lateinit var recyclerTareas: RecyclerView
     lateinit var adapter:AdapterTareas
+    //Para el sonido crear raw en res y añadir los sonidos ahi
     lateinit var checkSonido: MediaPlayer
     lateinit var eliminarSonido: MediaPlayer
 
