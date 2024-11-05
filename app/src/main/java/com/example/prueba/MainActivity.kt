@@ -37,9 +37,11 @@ class MainActivity : AppCompatActivity() {
     //Para el sonido crear raw en res y añadir los sonidos ahi
     lateinit var checkSonido: MediaPlayer
     lateinit var eliminarSonido: MediaPlayer
+    lateinit var horario: String
 
 
-    var tareas = mutableListOf<String>()
+    var tareas = mutableListOf<Tarea>()
+    val db:BBDD = BBDD(this)
 
 
 
@@ -60,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         textoEdit = findViewById(R.id.texto)
         checkSonido = MediaPlayer.create(this, R.raw.ok)
         eliminarSonido = MediaPlayer.create(this, R.raw.cash)
+        //Inicializamos la base de datos
         initUi()
     }
 
@@ -76,7 +79,7 @@ class MainActivity : AppCompatActivity() {
      * Este metodo hara que el RecyclerView se muestre bien
      */
     private fun initRecyclerView() {
-        tareas = prefs.recuperarTareas()
+        tareas = db.getTareas().toMutableList()
         recyclerTareas.layoutManager = LinearLayoutManager(this)
         adapter = AdapterTareas(tareas, {eliminarTarea(it)})
         recyclerTareas.adapter = adapter
@@ -89,8 +92,9 @@ class MainActivity : AppCompatActivity() {
      */
     private fun eliminarTarea(posicion:Int){
         tareas.removeAt(posicion)
+        db.eliminarTarea(posicion)
+        tareas = db.getTareas().toMutableList()
         adapter.notifyDataSetChanged()
-        prefs.guardarTareas(tareas)
         eliminarSonido.start()
     }
     /**
@@ -108,10 +112,12 @@ class MainActivity : AppCompatActivity() {
     private fun aniadeTarea() {
         if(textoEdit.text.isNotEmpty()){
             val tareaAAniadir = textoEdit.text.toString()
-            tareas.add(tareaAAniadir)
+            val tarea = Tarea(1, tareaAAniadir)
+            tareas.add(tarea)
+            db.insertarTarea(tareaAAniadir)
+            tareas = db.getTareas().toMutableList()
             adapter.notifyDataSetChanged()
             textoEdit.setText("")
-            prefs.guardarTareas(tareas)
             checkSonido.start()
         } else{
             mostrarAlerta(this)
@@ -162,7 +168,8 @@ class MainActivity : AppCompatActivity() {
      * @param minuto
      */
     fun mostrarResultado(hora: Int, minuto: Int){
+        horario = "$hora:$minuto"
         var texto = textoEdit.text
-        textoEdit.setText("$texto --> $hora:$minuto")
+        textoEdit.setText("$texto --> $horario")
     }
 }

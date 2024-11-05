@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
  * @author Lierni
  * @version 2.0
  */
-class AdapterTareas(private val tareas:List<String>, private val onItemDone: (Int) -> Unit):RecyclerView.Adapter<TareasViewHolder>(){
+class AdapterTareas(private val tareas:List<Tarea>, private val onItemDone: (Int) -> Unit):RecyclerView.Adapter<TareasViewHolder>(){
 
     /**
      * Este metodo crea ViewHolder, y le asigne el item Task con ViewHolder
@@ -32,7 +32,7 @@ class AdapterTareas(private val tareas:List<String>, private val onItemDone: (In
      * @param position
      */
     override fun onBindViewHolder(holder: TareasViewHolder, position: Int) {
-        holder.insertarTarea(tareas[position], onItemDone)
+        holder.insertarTarea(tareas[position].toString(), onItemDone)
     }
 
     /**
