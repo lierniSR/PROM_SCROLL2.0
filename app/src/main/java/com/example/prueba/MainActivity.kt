@@ -91,8 +91,8 @@ class MainActivity : AppCompatActivity() {
      * @param posicion
      */
     private fun eliminarTarea(posicion:Int){
+        db.eliminarTarea(tareas[posicion].id)
         tareas.removeAt(posicion)
-        db.eliminarTarea(posicion)
         tareas = db.getTareas().toMutableList()
         adapter.notifyDataSetChanged()
         eliminarSonido.start()
@@ -113,8 +113,8 @@ class MainActivity : AppCompatActivity() {
         if(textoEdit.text.isNotEmpty()){
             val tareaAAniadir = textoEdit.text.toString()
             val tarea = Tarea(1, tareaAAniadir)
-            tareas.add(tarea)
             db.insertarTarea(tareaAAniadir)
+            tareas.add(tarea)
             tareas = db.getTareas().toMutableList()
             adapter.notifyDataSetChanged()
             textoEdit.setText("")

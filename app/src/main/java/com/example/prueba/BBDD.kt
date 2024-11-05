@@ -5,6 +5,12 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
+/**
+ * La creacion de la base de datos de SQLite
+ *
+ *
+ * @param context
+ */
 class BBDD (context: Context) :  SQLiteOpenHelper(
     context, DATABASE_NAME, null, DATABASE_VERSION
 ){
@@ -19,6 +25,8 @@ class BBDD (context: Context) :  SQLiteOpenHelper(
 
     /**
      * Crea la tabla
+     *
+     * @param db
      */
     override fun onCreate(db: SQLiteDatabase?) {
         val creacionTabLayout = "CREATE TABLE $TABLE_NAME (" +
@@ -29,6 +37,10 @@ class BBDD (context: Context) :  SQLiteOpenHelper(
 
     /**
      * Mira en la base de datos si hay alguna tabla con ese nombre, si existe una tabla con ese nobre se eliminara
+     *
+     * @param db
+     * @param p1
+     * @param p2
      */
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
         val dropTable = "DROP TABLE IF EXISTS $TABLE_NAME"
@@ -38,6 +50,8 @@ class BBDD (context: Context) :  SQLiteOpenHelper(
 
     /**
      * Inserta la tarea en la base de datos
+     *
+     * @param tarea
      */
     fun insertarTarea(tarea: String) {
         //Abrimos en modo lectura
@@ -54,11 +68,12 @@ class BBDD (context: Context) :  SQLiteOpenHelper(
 
     /**
      * Elimina la tarea de la base de datos
+     *
+     * @param idNota
      */
     fun eliminarTarea(idNota : Int){
         //Abrimos modo lectura
         val db = writableDatabase
-
         val whereClause = "$COLUMN_ID = ?"
         val whereArgs = arrayOf(idNota.toString())
         //Eliminar la tarea
@@ -69,6 +84,8 @@ class BBDD (context: Context) :  SQLiteOpenHelper(
 
     /**
      * Visualiza las tareas de la base de datos
+     *
+     * @return List<Tarea>
      */
     fun getTareas(): List<Tarea>{
         //Se crea una lista mutable
